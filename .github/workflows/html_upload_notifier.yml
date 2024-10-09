@@ -25,8 +25,11 @@ jobs:
           # 获取新增的 .html 文件
           NEW_FILES=$(git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep ".html")
           if [ ! -z "$NEW_FILES" ]; then           
+            MESSAGE="**Papulatus Daily**\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/$NEW_FILES"
+            ESCAPED_MESSAGE=$(echo -n "$MESSAGE" | jq -R .)
+            echo "Escaped Message: $ESCAPED_MESSAGE"  # 调试输出
             curl -H "Content-Type: application/json" \
             -X POST \
-            -d "{\"content\": \"**Papulatus Daily**\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/$NEW_FILES\"}" \
+            -d "{\"content\": $ESCAPED_MESSAGE}" \
             $DISCORD_WEBHOOK_URL
           fi
