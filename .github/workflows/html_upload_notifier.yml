@@ -24,7 +24,7 @@ jobs:
         run: |
           # 获取新增的 .html 文件
           NEW_FILES=$(git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep ".html")
-          FILES_LIST=$(echo "$NEW_FILES" | sed 's/^/"/;s/$/"/;s/\n/,/g' | sed 's/,$//')  # 转换为 "file1.html","file2.html"
+          FILES_LIST=$(echo "$NEW_FILES" | awk '{printf "\"%s\",", $0}'); FILES_LIST=${FILES_LIST%,} # 去掉最后的逗号
           MESSAGE="**Papulatus Daily:**\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/${FILES_LIST}"
           if [ ! -z "$NEW_FILES" ]; then
             curl -H "Content-Type: application/json" \
