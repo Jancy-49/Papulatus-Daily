@@ -47,7 +47,7 @@ jobs:
                 \"description\": f\"Papulatus Daily ({Date})\",
                 \"color\": 0x00ff00,
                 \"image\": {\"url\": f\"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Daily/image/{Date}.png\"}}]}
-            response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), data=json.dumps(embed)， headers={"Content-Type": "application/json"})
+            response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), data=json.dumps(embed), headers={"Content-Type": "application/json"})
             print(response.text)
           else:
             print('No new HTML files detected.')" > notify_discord.py
