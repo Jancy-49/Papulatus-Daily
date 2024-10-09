@@ -3,7 +3,7 @@ name: Notify Discord on new HTML file
 on:
   push:
     paths:
-      - 'Extraction/*.html'
+      - 'Compare/*.html'
 
 jobs:
   notify-discord:
@@ -41,12 +41,12 @@ jobs:
           
           new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
           if 'Papulatus_Daily' in new_files:
-            Matcher = re.match(r'Extraction/(\w+)_V(\d+).html', new_files)
+            Matcher = re.match(r'Compare/(\w+)_V(\d+).html', new_files)
             server = Matcher.group(1)
             ver = Matcher.group(2)
             embed = {\"embeds\": [{
                 \"title\": f\"{server} V{ver} Tooltip Extraction\",
-                \"url\": f\"https://jancy-49.github.io/Papulatus-Daily/Extraction/{server}_V{ver}.html\",
+                \"url\": f\"https://jancy-49.github.io/Papulatus-Daily/Compare/{server}_V{ver}.html\",
                 \"description\": f\"{server} V{ver} Tooltip Extraction\",
                 \"color\": 0xff0000,
                 \"thumbnail\": {\"url\": \"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Daily/thumbnail.png\"}}]}
