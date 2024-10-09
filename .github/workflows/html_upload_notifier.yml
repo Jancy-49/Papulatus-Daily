@@ -42,8 +42,8 @@ jobs:
             Date = re.match(r'Daily/Papulatus_Daily\((\d+-\d+-\d+)\).html', new_files).group(1)
             message = f'# [Papulatus Daily({Date})](https://jancy-49.github.io/Papulatus-Daily/{new_files})\\nhttps://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Daily/image/{Date}.png'
             data = {'content': message}
-            embed = {"embeds": [{"title": "Papulatus Daily({Date})",
-                                 "description": "Papulatus Daily({Date})",
+            embed = {"embeds": [{"title": "Papulatus Daily ({Date})",
+                                 "description": "Papulatus Daily ({Date})",
                                  "color": 0x00ff00,  # 使用十六进制颜色值
                                  "image": {"url": "图片链接"  # 替换为你的图片链接}}]}
             response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), data=json.dumps(embed))
