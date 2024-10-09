@@ -4,7 +4,7 @@ on:
   push:
     # 仅当推送包含 .html 文件时触发
     paths:
-      - '**/*.html'
+      - 'Daily/*.html'
 
 jobs:
   notify-discord:
@@ -27,6 +27,6 @@ jobs:
           if [ ! -z "$NEW_FILES" ]; then
             curl -H "Content-Type: application/json" \
             -X POST \
-            -d "{\"content\": \"**New HTML Files Uploaded:**\n$NEW_FILES\"}" \
+            -d "{\"content\": \"**Papulatus Daily:**\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/$NEW_FILES\"}" \
             $DISCORD_WEBHOOK_URL
           fi
