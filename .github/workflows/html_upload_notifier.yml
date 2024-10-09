@@ -2,7 +2,6 @@ name: Notify Discord on new HTML file
 
 on:
   push:
-    # 仅当推送包含 .html 文件时触发
     paths:
       - 'Daily/*.html'
 
@@ -17,19 +16,29 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 发送消息到 Discord
+      # 安装 Python
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'  # 可以指定你需要的 Python 版本
+
+      # 运行 Python 脚本
       - name: Send notification to Discord
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          # 获取新增的 .html 文件
-          NEW_FILES=$(git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep ".html")
-          if [ ! -z "$NEW_FILES" ]; then           
-            MESSAGE="**Papulatus Daily**\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/$NEW_FILES"
-            ESCAPED_MESSAGE=$(echo -n "$MESSAGE" | jq -R .)
-            echo "Escaped Message: $ESCAPED_MESSAGE"  # 调试输出
-            curl -H "Content-Type: application/json" \
-            -X POST \
-            -d "{\"content\": $ESCAPED_MESSAGE}" \
-            $DISCORD_WEBHOOK_URL
-          fi
+          # 创建一个 Python 脚本并运行
+          echo "import os
+import requests
+
+new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
+
+if new_files:
+    message = f'**Papulatus Daily**\\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/{new_files}'
+    data = {'content': message}
+    response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json=data)
+    print(response.text)
+else:
+    print('No new HTML files detected.')" > notify_discord.py
+
+          python notify_discord.py
