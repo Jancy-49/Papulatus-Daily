@@ -35,10 +35,12 @@ jobs:
         run: |
           # 创建一个 Python 脚本并运行
           echo "import os
+          import re
           import requests
           new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
-          if new_files:
-            message = f'**Papulatus Daily**\\nhttps://jancy-49.github.io/Papulatus-Daily/{new_files}'
+          if 'Papulatus_Daily' in new_files:
+            Date = re.match(r'Daily/Papulatus_Daily\((\d+-\d+-\d+)\).html', new_files).group(1)
+            message = f'**Papulatus Daily({Date})**\\nhttps://jancy-49.github.io/Papulatus-Daily/{new_files}'
             data = {'content': message}
             response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json=data)
             print(response.text)
