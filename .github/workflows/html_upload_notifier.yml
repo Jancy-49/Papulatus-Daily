@@ -38,6 +38,7 @@ jobs:
           import re
           import requests
           import json
+          
           new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
           if 'Papulatus_Daily' in new_files:
             Date = re.match(r'Daily/Papulatus_Daily\((\d+-\d+-\d+)\).html', new_files).group(1)
@@ -46,7 +47,7 @@ jobs:
                 \"description\": f\"Papulatus Daily ({Date})\",
                 \"color\": 0x00ff00,
                 \"image\": {\"url\": f\"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Daily/image/{Date}.png\"}}]}
-            response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), data=json.dumps(embed))
+            response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), data=json.dumps(embed)， headers={"Content-Type": "application/json"})
             print(response.text)
           else:
             print('No new HTML files detected.')" > notify_discord.py
