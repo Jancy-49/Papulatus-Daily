@@ -40,10 +40,10 @@ jobs:
           new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
           if 'Papulatus_Daily' in new_files:
             Date = re.match(r'Daily/Papulatus_Daily\((\d+-\d+-\d+)\).html', new_files).group(1)
-            embed = {"embeds": [{"title": "Papulatus Daily ({Date})",
-                                 "description": "Papulatus Daily ({Date})",
+            embed = {"embeds": [{"title": f"Papulatus Daily ({Date})",
+                                 "description": f"Papulatus Daily ({Date})",
                                  "color": 0x00ff00,
-                                 "image": {"url": "https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Daily/image/{Date}.png"}}]}
+                                 "image": {"url": f"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Daily/image/{Date}.png"}}]}
             response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), data=json.dumps(embed))
             print(response.text)
           else:
