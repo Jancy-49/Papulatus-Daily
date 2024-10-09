@@ -29,16 +29,14 @@ jobs:
         run: |
           # 创建一个 Python 脚本并运行
           echo "import os
-import requests
-
-new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
-
-if new_files:
-    message = f'**Papulatus Daily**\\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/{new_files}'
-    data = {'content': message}
-    response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json=data)
-    print(response.text)
-else:
-    print('No new HTML files detected.')" > notify_discord.py
+          import requests
+          new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
+          if new_files:
+            message = f'**Papulatus Daily**\\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/{new_files}'
+            data = {'content': message}
+            response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json=data)
+            print(response.text)
+          else:
+            print('No new HTML files detected.')" > notify_discord.py
 
           python notify_discord.py
