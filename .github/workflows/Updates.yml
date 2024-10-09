@@ -40,7 +40,7 @@ jobs:
           import json
           
           new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
-          if 'Papulatus_Daily' in new_files:
+          if 'Compare' in new_files:
             Matcher = re.match(r'Compare/(\w+)_V(\d+).html', new_files)
             server = Matcher.group(1)
             ver = Matcher.group(2)
