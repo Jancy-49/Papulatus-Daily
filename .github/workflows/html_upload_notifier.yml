@@ -23,7 +23,7 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           # 获取新增的 .html 文件
-          NEW_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep ".html")
+          NEW_FILES=$(git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep ".html")
           if [ ! -z "$NEW_FILES" ]; then           
             curl -H "Content-Type: application/json" \
             -X POST \
