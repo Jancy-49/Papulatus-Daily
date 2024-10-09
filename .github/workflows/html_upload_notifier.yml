@@ -24,9 +24,11 @@ jobs:
         run: |
           # 获取新增的 .html 文件
           NEW_FILES=$(git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep ".html")
+          FILES_LIST=$(echo "$NEW_FILES" | sed 's/^/"/;s/$/"/;s/\n/,/g' | sed 's/,$//')  # 转换为 "file1.html","file2.html"
+          MESSAGE="**Papulatus Daily:**\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/${FILES_LIST}"
           if [ ! -z "$NEW_FILES" ]; then
             curl -H "Content-Type: application/json" \
             -X POST \
-            -d "{\"content\": \"**Papulatus Daily:**\nhttps://jancy-49.github.io/Papulatus-Daily/Daily/$NEW_FILES\"}" \
+            -d "{\"content\": \"$MESSAGE\"}" \
             $DISCORD_WEBHOOK_URL
           fi
