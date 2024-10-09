@@ -2,7 +2,7 @@ name: Notify Discord on new HTML file
 
 on:
   push:
-    # 仅当上传 HTML 文件时触发
+    # 仅当推送包含 .html 文件时触发
     paths:
       - '**/*.html'
 
@@ -11,19 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 检查出仓库代码
+      # 检查出代码，拉取完整的 Git 历史
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       # 发送消息到 Discord
       - name: Send notification to Discord
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          NEW_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep ".html")
+          # 获取新增的 .html 文件
+          NEW_FILES=$(git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep ".html")
           if [ ! -z "$NEW_FILES" ]; then
             curl -H "Content-Type: application/json" \
             -X POST \
-            -d "{\"content\": \"**Papulatus Daily**\n: $NEW_FILES\"}" \
+            -d "{\"content\": \"**New HTML Files Uploaded:**\n$NEW_FILES\"}" \
             $DISCORD_WEBHOOK_URL
           fi
