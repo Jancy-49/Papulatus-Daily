@@ -44,6 +44,7 @@ jobs:
             Date = re.match(r'Daily/Papulatus_Daily\((\d+-\d+-\d+)\).html', new_files).group(1)
             embed = {\"embeds\": [{
                 \"title\": f\"Papulatus Daily ({Date})\",
+                \"url\": f\"https://jancy-49.github.io/Papulatus-Daily/Daily/Papulatus_Daily({Date}).html\",
                 \"description\": f\"Papulatus Daily ({Date})\",
                 \"color\": 0x00ff00,
                 \"image\": {\"url\": f\"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Daily/image/{Date}.png\"}}]}
