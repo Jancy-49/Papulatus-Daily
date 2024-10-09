@@ -3,7 +3,7 @@ name: Notify Discord on new HTML file
 on:
   push:
     paths:
-      - 'Daily/*.html'
+      - '**/*.html'
 
 jobs:
   notify-discord:
