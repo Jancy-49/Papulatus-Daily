@@ -31,7 +31,7 @@ jobs:
       # 运行 Python 脚本
       - name: Send notification to Discord
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL2 }}
         run: |
           # 创建一个 Python 脚本并运行
           echo "import os
@@ -50,7 +50,7 @@ jobs:
                 \"description\": f\"{server} V{ver} Tooltip Extraction\",
                 \"color\": 0xff0000,
                 \"thumbnail\": {\"url\": \"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Daily/thumbnail.png\"}}]}
-            response = requests.post(os.getenv('DISCORD_WEBHOOK_URL'), data=json.dumps(embed), headers={\"Content-Type\": \"application/json\"})
+            response = requests.post(os.getenv('DISCORD_WEBHOOK_URL2'), data=json.dumps(embed), headers={\"Content-Type\": \"application/json\"})
             print(response.text)
           else:
             print('No new HTML files detected.')" > notify_discord.py
