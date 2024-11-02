@@ -40,7 +40,7 @@ jobs:
           import json
           
           new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
-          if 'Compare' in new_files:
+          if 'Dojo' in new_files:
             Matcher = re.match(r'Dojo/Week(\d+).html', new_files)
             week = Matcher.group(1)
             embed = {\"embeds\": [{
