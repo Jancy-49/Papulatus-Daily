@@ -48,7 +48,7 @@ jobs:
                 \"url\": f\"https://jancy-49.github.io/Papulatus-Daily/Dojo/Week{week}.html\",
                 \"description\": f\"KMS Mureung Dojo Last Week Data Review (Week {week})\",
                 \"color\": 0xff0000,
-                \"thumbnail\": {\"url\": \"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Dojo/ImageGen3/Week{Week}/上周封面.png\"}}]}
+                \"thumbnail\": {\"url\": \"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Dojo/ImageGen3/Week{week}/上周封面.png\"}}]}
             response = requests.post(os.getenv('DISCORD_WEBHOOK_URL3'), data=json.dumps(embed), headers={\"Content-Type\": \"application/json\"})
             print(response.text)
           else:
