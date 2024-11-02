@@ -6,3 +6,6 @@
 - 这是一个专为CMS设计的冒险岛提取工具。
 - 与其他客户端合作，例如 KMS、GMS、CMS。
 - [点击前往](https://github.com/Jancy-49/WzComparerR2-CMS)
+
+# 武陵道场
+- 每周更新武陵道场上周数据回顾
