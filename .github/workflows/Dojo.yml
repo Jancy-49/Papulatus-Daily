@@ -1,0 +1,57 @@
+name: Notify Discord on new HTML file
+
+on:
+  push:
+    paths:
+      - 'Dojo/*.html'
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 检查出代码，拉取完整的 Git 历史
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # 安装 Python
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'  # 可以指定你需要的 Python 版本
+          
+      # 安装 requests 库
+      - name: Install requests
+        run: |
+          python -m pip install --upgrade pip  # 更新 pip
+          pip install requests  # 安装 requests 库
+
+      # 运行 Python 脚本
+      - name: Send notification to Discord
+        env:
+          DISCORD_WEBHOOK_URL3: ${{ secrets.DISCORD_WEBHOOK_URL3 }}
+        run: |
+          # 创建一个 Python 脚本并运行
+          echo "import os
+          import re
+          import requests
+          import json
+          
+          new_files = os.popen('git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.sha }} | grep \".html\"').read().strip()
+          if 'Compare' in new_files:
+            Matcher = re.match(r'Dojo/Week(\d+).html', new_files)
+            week = Matcher.group(1)
+            embed = {\"embeds\": [{
+                \"title\": f\"KMS Mureung Dojo Last Week Data Review (Week {week})\",
+                \"url\": f\"https://jancy-49.github.io/Papulatus-Daily/Dojo/Week{week}.html\",
+                \"description\": f\"KMS Mureung Dojo Last Week Data Review (Week {week})\",
+                \"color\": 0xff0000,
+                \"thumbnail\": {\"url\": \"https://jancy-1256059393.cos.ap-guangzhou.myqcloud.com/Dojo/ImageGen3/Week{Week}/上周封面.png\"}}]}
+            response = requests.post(os.getenv('DISCORD_WEBHOOK_URL3'), data=json.dumps(embed), headers={\"Content-Type\": \"application/json\"})
+            print(response.text)
+          else:
+            print('No new HTML files detected.')" > notify_discord.py
+
+          python notify_discord.py
