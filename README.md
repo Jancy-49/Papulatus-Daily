@@ -7,5 +7,8 @@
 - 与其他客户端合作，例如 KMS、GMS、CMS。
 - [点击前往](https://github.com/Jancy-49/WzComparerR2-CMS)
 
+# 翻译
+- 全服各类名词翻译
+  
 # 武陵道场
 - 每周更新武陵道场上周数据回顾
