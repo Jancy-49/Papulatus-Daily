@@ -1,3 +1,7 @@
+# 主页
+- 最新公告
+- [点击前往]（https://jancy-49.github.io/Papulatus-Daily/index.html）
+
 # 帕普拉图斯日报
 - 每日更新帕普拉图斯机器人日报
 - 更新各服Tooltip对比文档
